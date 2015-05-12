@@ -3,7 +3,26 @@
 
 依赖于weibo，请安装pip install weibo
 
+web_cfg由于有私有文件，没有公开。可以自己申请SINA APP账号，或者私下向我索取。
+其中需要的配置参数有
+APP_KEY = 
+APP_SECRET = 
+CALLBACK = 'https://api.weibo.com/oauth2/default.html'
+AUTH_URL = 'https://api.weibo.com/oauth2/authorize'
+
+UID = 1683951363  #网页登陆你的weibo账号就可以看到了
+
+USER = 'weibo账号'
+PASSWD = 'weibo密码'
+
+TTFILE = os.getcwd()+"/toutiao.txt"
+
+运行方式 python run.py。如有有服务器，建议添加到crontab按时自动运行
+
 项目的定制目标：
 (1)根据Twitter的开放接口，将Twitter上的“和谐”消息，在墙外的服务器自动调用
 Sina微博转发；
 (2)跟踪一些好的网站，爬虫后微博分享。
+
+20150512 
+    目前抓取toutiao.io，然后自动发送到微博上。
