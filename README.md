@@ -26,3 +26,8 @@ Sina微博转发；
 
 20150512 
     目前抓取toutiao.io，然后自动发送到微博上。
+	
+20150513
+	日志变为英文，否则crontab无法执行
+	crontab格式
+	40 5 * * *    /bin/bash /home/user/project/sinaweibo/start.sh

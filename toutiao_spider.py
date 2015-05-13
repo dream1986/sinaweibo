@@ -10,6 +10,8 @@ import re
 import os
 from BeautifulSoup import BeautifulSoup
 
+from jd_utils import log_info, log_warn
+
 import jd_utils
 import wb_cfg
 
@@ -22,10 +24,10 @@ tt_headers = { "Host":"toutiao.io",
 
 
 class Toutiao:
-    def __init__(self):
+    def __init__(self, logger = None):
 	if os.path.exists(wb_cfg.TTFILE):
 	    os.remove(wb_cfg.TTFILE)
-        pass
+        self.log = logger
     
     def get_toutiao(self):
 	fetch_result = []
@@ -33,10 +35,10 @@ class Toutiao:
 	    request = urllib2.Request(tt_main_url, headers = tt_headers)
 	    html = urllib2.urlopen(request).read()
 	except UnicodeDecodeError:
-	    print u"GBK/Unicode编解码错误!"
+	    log_info(u"开发者头条模块", u"GBK/Unicode Code Decode Error!", self.log)
 	    return
 	except Exception:
-	    print u"未知错误!"
+	    log_warn(u"开发者头条模块", u"Unkown Error!", self.log)
 	    return	
 	soup = BeautifulSoup(html)
 	contents = soup.findAll('div', attrs = {"class":"content"} )
@@ -48,17 +50,26 @@ class Toutiao:
 		    #str_msg = u"{'title':'%s', 'summary':'%s', 'link':'%s'}" % (title.a.string, summary.a.string, title.a['href'])
 		    fetch_item = dict(TITLE=title.a.string.encode('utf-8'), SUMMARY=summary.a.string.encode('utf-8'), LINK=title.a['href'].encode('utf-8'))
 		    fetch_result.append(fetch_item)
-	print u"今天抓取结束！"
-	print u"总共抓取%d条头条！" % len(fetch_result)
+		    
+	log_info(u"开发者头条模块", u"Todady's Toutiao Fetched Finished!", self.log)
+	log_info(u"开发者头条模块", u"We've Fetched %s items!" % len(fetch_result), self.log)
 	
 	try:
-	    fp = codecs.open(wb_cfg.TTFILE, 'wb',encoding = 'utf-8')
+	    fp = codecs.open(wb_cfg.TTFILE, 'ab',encoding = 'utf-8')
 	    msg = repr(fetch_result)
 	    fp.write(msg)
 	except Exception:
-	    print u"读写文件错误!"
+	    log_info(u"开发者头条模块",u"Read Write File Error", self.log)
 	finally:
 	    fp.close()
+	
+    def encasp_toutiao(self, tt_item):
+	web_msg = u"【开发者头条】" + u"标题：" + tt_item['TITLE'].decode('utf-8') + \
+	    u"\n主题：" + tt_item['SUMMARY'].decode('utf-8') + \
+	    u"\n链接：" + tt_item['LINK'].decode('utf-8') + \
+	    u"\n[Nicol's Robot %s]" % (jd_utils.current_time())
+	return web_msg	
+	
 		
 if __name__ == "__main__":
     tt = Toutiao()
