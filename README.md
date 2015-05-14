@@ -31,3 +31,11 @@ Sina微博转发；
 	日志变为英文，否则crontab无法执行
 	crontab格式
 	40 5 * * *    /bin/bash /home/user/project/sinaweibo/start.sh
+	
+20150514
+	程序分开，repost没两个小时执行一次，toutiao每天执行一次
+	转发的有白名单的限制
+	# m h  dom mon dow   command
+	40 */2 * * *    /bin/bash /home/user/project/sinaweibo/start.sh repost
+	15 5 * * *    /bin/bash /home/user/project/sinaweibo/start.sh toutiao
+
