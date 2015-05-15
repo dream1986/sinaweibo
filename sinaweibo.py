@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # coding:utf-8
 # manning  2015-5-12
+
 import os
 import urllib
 import urllib2
@@ -13,9 +14,8 @@ import jd_logger
 import jd_utils
 import wb_cfg
 from weibo import Client
-from jd_utils import log_info, log_warn
 
-from wb_cfg import REPOST_WHITE
+from jd_utils import log_info, log_warn
 
 class SinaWeibo:
     def __init__ (self, username = wb_cfg.USER, passwd = wb_cfg.PASSWD, logger = None):
@@ -81,4 +81,4 @@ class SinaWeibo:
         
 if __name__ == "__main__":
     sw = SinaWeibo()
-    sw.get_repost_white()
+    sw.repost_friend(200)

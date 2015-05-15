@@ -9,6 +9,7 @@ import random
 
 from jd_utils import log_info, log_warn
 from sinaweibo import SinaWeibo
+from twitter_me import Twitter_Me
 import jd_utils
 import jd_logger
 import wb_cfg
@@ -28,7 +29,11 @@ if __name__ == "__main__":
 	
     app_t = os.sys.argv[1]
     
-    if app_t == "toutiao":
+    if app_t == "twitter":
+	sw = SinaWeibo()
+	t = Twitter_Me(sw)
+	t.repost_to_sina()	    
+    elif app_t == "toutiao":
 	sw = SinaWeibo(logger = main_log)    
 
 	#好友圈转发

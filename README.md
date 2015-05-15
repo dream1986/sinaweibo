@@ -39,3 +39,5 @@ Sina微博转发；
 	40 */2 * * *    /bin/bash /home/user/project/sinaweibo/start.sh repost
 	15 5 * * *    /bin/bash /home/user/project/sinaweibo/start.sh toutiao
 
+20150515
+	添加Twitter转发模块。不过windows正常，Linux不正常。。。
